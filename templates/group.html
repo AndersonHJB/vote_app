@@ -14,6 +14,12 @@
                 <h1>{{ group_name }}</h1>
             </div>
             <div class="card-body">
+                <!-- 新增的分类链接展示区域 -->
+                <div class="category-links">
+                    {% for cat_name, cat_data in categories.items() %}
+                        <a href="{{ url_for('single_category', group_name=group_name, category_name=cat_name) }}">{{ cat_name }}</a>
+                    {% endfor %}
+                </div>
                 <!-- 根据是否有link_suffix来决定表单提交地址 -->
                 {% if link_suffix %}
                     <form method="POST" action="{{ url_for('vote_by_link', link_suffix=link_suffix) }}">
