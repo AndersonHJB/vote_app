@@ -1,6 +1,84 @@
+/* style.css */
 body {
-    background-color: #f8f9fa;
+    background-color: #f4f6f8;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
 }
-h1 {
-    color: #343a40;
+
+h1, h2, h3 {
+    color: #2c3e50;
+    text-transform: capitalize;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #3498db;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-bottom: none;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.btn {
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-transform: capitalize;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #7f8c8d;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #95a5a6;
+}
+
+.list-group-item {
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 10px 15px;
+}
+
+.list-group-item:hover {
+    background-color: #ecf0f1;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }

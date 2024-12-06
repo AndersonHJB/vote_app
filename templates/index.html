@@ -5,18 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vote Groups</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Vote Groups</h1>
-        <ul class="list-group">
-            {% for group in groups %}
-                <li class="list-group-item">
-                    <a href="{{ url_for('group', group_name=group) }}">{{ group }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-        <a href="{{ url_for('admin') }}" class="btn btn-secondary mt-3">Admin Panel</a>
+        <div class="card">
+            <div class="card-header">
+                <h1>Vote Groups</h1>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for group in groups %}
+                        <li class="list-group-item">
+                            <a href="{{ url_for('group', group_name=group) }}" class="text-decoration-none text-dark">{{ group }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ url_for('admin') }}" class="btn btn-primary mt-4 d-block">Admin Panel</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

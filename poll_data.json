@@ -1,53 +1,29 @@
 {
-    "Vote Group 1": {
-        "Favorite Star": {
+    "\u997a\u5b50\u53d6\u540d": {
+        "\u6027\u522b\uff1a\u5973": {
             "options": [
-                "Star A",
-                "Star B",
-                "Star C"
+                "\u9ec4\u5a49\u68e0\uff1a\u6e29\u5a49\u53ef\u4eba\uff0c\u7518\u68e0\u4e4b\u60e0"
             ],
             "results": {
-                "Star A": 11,
-                "Star B": 8,
-                "Star C": 6
+                "\u9ec4\u5a49\u68e0\uff1a\u6e29\u5a49\u53ef\u4eba\uff0c\u7518\u68e0\u4e4b\u60e0": 2
             }
         },
-        "Favorite Sport": {
-            "options": [
-                "Basketball",
-                "Badminton",
-                "Table Tennis"
-            ],
-            "results": {
-                "Basketball": 9,
-                "Badminton": 9,
-                "Table Tennis": 4
-            }
-        }
-    },
-    "Vote Group 2": {
-        "Favorite Movie Genre": {
-            "options": [
-                "Action",
-                "Comedy",
-                "Drama"
-            ],
-            "results": {
-                "Action": 5,
-                "Comedy": 8,
-                "Drama": 2
-            }
-        }
-    },
-    "\u997a\u5b50\u53d6\u540d": {
         "\u6027\u522b\uff1a\u7537": {
             "options": [
                 "\u9ec4\u9526\u7a0b\uff08\u5bb8\uff09\uff1a\u9526\u8863\u7389\u98df\uff0c\u524d\u7a0b\u4f3c\u9526\uff08\u5b8f\u5bb8\u4e07\u91cc\uff09",
-                "\u9ec4\u9526\u5955\uff1a\u524d\u7a0b\u4f3c\u9526\uff0c\u795e\u91c7\u5955\u5955"
+                "\u9ec4\u9526\u5955\uff08\u6e59\uff09\uff1a\u524d\u7a0b\u4f3c\u9526\uff0c\u795e\u91c7\u5955\u5955",
+                "\u9ec4\u747e\u6cfd\uff1a\u6000\u747e\u63e1\u745c\uff0c\u6e29\u6da6\u800c\u6cfd",
+                "\u9ec4\u745e\u6cfd\uff1a\u5929\u964d\u7965\u745e\uff0c\u798f\u6cfd\u6df1\u539a",
+                "\u9ec4\u5353\u7fca\uff1a\u5353\u5c14\u4e0d\u51e1",
+                "\u9ec4\u541b\u6cfd\uff1a\u541b\u5b50\u5982\u73e9\uff0c\u6e29\u6da6\u800c\u6cfd"
             ],
             "results": {
-                "\u9ec4\u9526\u7a0b\uff08\u5bb8\uff09\uff1a\u9526\u8863\u7389\u98df\uff0c\u524d\u7a0b\u4f3c\u9526\uff08\u5b8f\u5bb8\u4e07\u91cc\uff09": 1,
-                "\u9ec4\u9526\u5955\uff1a\u524d\u7a0b\u4f3c\u9526\uff0c\u795e\u91c7\u5955\u5955": 0
+                "\u9ec4\u9526\u7a0b\uff08\u5bb8\uff09\uff1a\u9526\u8863\u7389\u98df\uff0c\u524d\u7a0b\u4f3c\u9526\uff08\u5b8f\u5bb8\u4e07\u91cc\uff09": 2,
+                "\u9ec4\u9526\u5955\uff08\u6e59\uff09\uff1a\u524d\u7a0b\u4f3c\u9526\uff0c\u795e\u91c7\u5955\u5955": 0,
+                "\u9ec4\u747e\u6cfd\uff1a\u6000\u747e\u63e1\u745c\uff0c\u6e29\u6da6\u800c\u6cfd": 0,
+                "\u9ec4\u745e\u6cfd\uff1a\u5929\u964d\u7965\u745e\uff0c\u798f\u6cfd\u6df1\u539a": 0,
+                "\u9ec4\u5353\u7fca\uff1a\u5353\u5c14\u4e0d\u51e1": 0,
+                "\u9ec4\u541b\u6cfd\uff1a\u541b\u5b50\u5982\u73e9\uff0c\u6e29\u6da6\u800c\u6cfd": 0
             }
         }
     }
