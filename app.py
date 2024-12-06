@@ -6,8 +6,9 @@ app = Flask(__name__)
 # JSON 文件路径
 DATA_FILE = "poll_data.json"
 
-# 加载投票数据
+
 def load_data():
+    """从 JSON 文件加载投票数据"""
     try:
         with open(DATA_FILE, "r") as file:
             return json.load(file)
@@ -15,19 +16,16 @@ def load_data():
         return {}
 
 
-# 保存投票数据
 def save_data(data):
+    """将投票数据保存到 JSON 文件"""
     with open(DATA_FILE, "w") as file:
         json.dump(data, file, indent=4)
-
-
-# 初始化投票数据
-poll_data = load_data()
 
 
 @app.route("/")
 def index():
     """首页：显示所有投票组"""
+    poll_data = load_data()
     groups = list(poll_data.keys())
     return render_template("index.html", groups=groups)
 
@@ -35,6 +33,7 @@ def index():
 @app.route("/group/<group_name>")
 def group(group_name):
     """显示某个投票组的所有类别"""
+    poll_data = load_data()
     if group_name not in poll_data:
         return "Group not found", 404
     categories = poll_data[group_name]
@@ -44,6 +43,7 @@ def group(group_name):
 @app.route("/vote/<group_name>", methods=["POST"])
 def vote(group_name):
     """处理某个投票组的投票"""
+    poll_data = load_data()
     if group_name not in poll_data:
         return "Group not found", 404
 
@@ -59,6 +59,7 @@ def vote(group_name):
 @app.route("/results/<group_name>")
 def results(group_name):
     """显示某个投票组的投票结果"""
+    poll_data = load_data()
     if group_name not in poll_data:
         return "Group not found", 404
     categories = poll_data[group_name]
@@ -68,6 +69,7 @@ def results(group_name):
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
     """后台管理页面，用于添加、删除投票组和类别"""
+    poll_data = load_data()
     if request.method == "POST":
         group_name = request.form.get("group_name")
         category_name = request.form.get("category_name")
@@ -85,7 +87,7 @@ def admin():
                     "results": {option: 0 for option in options},
                 }
 
-        save_data(poll_data)
+        save_data(poll_data)  # 保存更新
         return redirect(url_for("admin"))
 
     return render_template("admin.html", poll_data=poll_data)
@@ -94,18 +96,20 @@ def admin():
 @app.route("/delete_group/<group_name>", methods=["POST"])
 def delete_group(group_name):
     """删除投票组"""
+    poll_data = load_data()
     if group_name in poll_data:
         del poll_data[group_name]
-        save_data(poll_data)
+        save_data(poll_data)  # 保存更新
     return redirect(url_for("admin"))
 
 
 @app.route("/delete_category/<group_name>/<category_name>", methods=["POST"])
 def delete_category(group_name, category_name):
     """删除投票组中的某个类别"""
+    poll_data = load_data()
     if group_name in poll_data and category_name in poll_data[group_name]:
         del poll_data[group_name][category_name]
-        save_data(poll_data)
+        save_data(poll_data)  # 保存更新
     return redirect(url_for("admin"))
 
 
