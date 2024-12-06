@@ -18,13 +18,16 @@
                 <label for="options" class="form-label">Options (comma-separated)</label>
                 <input type="text" class="form-control" id="options" name="options" required>
             </div>
-            <button type="submit" class="btn btn-primary">Save Category</button>
+            <button type="submit" class="btn btn-primary">Add Category</button>
         </form>
         <h2 class="mt-5">Existing Categories</h2>
         <ul class="list-group">
-            {% for category, data in poll_data.items() %}
-                <li class="list-group-item">
-                    {{ category }}: {{ data['options'] }}
+            {% for category_name, category_data in poll_data.items() %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ category_name }}
+                    <form method="POST" action="{{ url_for('delete_category', category_name=category_name) }}" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
                 </li>
             {% endfor %}
         </ul>
