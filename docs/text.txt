@@ -1,14 +1,18 @@
 style.css:
 /* style.css */
 body {
-    background-color: #f4f6f8;
+    background: linear-gradient(135deg, #f4f6f8 0%, #e9ecf2 100%);
     font-family: 'Roboto', sans-serif;
     color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 h1, h2, h3 {
     color: #2c3e50;
     text-transform: capitalize;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .container {
@@ -20,16 +24,24 @@ h1, h2, h3 {
 .card {
     border: none;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin-bottom: 40px;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .card-header {
-    background-color: #3498db;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
     color: #fff;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     border-bottom: none;
 }
 
@@ -41,6 +53,7 @@ h1, h2, h3 {
     border-radius: 20px;
     padding: 10px 20px;
     text-transform: capitalize;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-primary {
@@ -50,6 +63,7 @@ h1, h2, h3 {
 
 .btn-primary:hover {
     background-color: #2980b9;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .btn-secondary {
@@ -59,6 +73,7 @@ h1, h2, h3 {
 
 .btn-secondary:hover {
     background-color: #95a5a6;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .list-group-item {
@@ -66,6 +81,8 @@ h1, h2, h3 {
     border-radius: 5px;
     margin-bottom: 5px;
     padding: 10px 15px;
+    background: #fff;
+    transition: background-color 0.3s ease;
 }
 
 .list-group-item:hover {
@@ -73,6 +90,7 @@ h1, h2, h3 {
     cursor: pointer;
 }
 
+/* 自适应处理 */
 @media (max-width: 768px) {
     h1 {
         font-size: 24px;
@@ -99,13 +117,14 @@ h1, h2, h3 {
     padding: 8px 15px;
     color: #3498db;
     text-decoration: none;
-    transition: background-color 0.3s ease;
     font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .category-links a:hover {
     background-color: #3498db;
     color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 admin.html:
