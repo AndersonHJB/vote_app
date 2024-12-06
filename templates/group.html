@@ -14,7 +14,13 @@
                 <h1>{{ group_name }}</h1>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ url_for('vote', group_name=group_name) }}">
+                <!-- 根据是否有link_suffix来决定表单提交地址 -->
+                {% if link_suffix %}
+                    <form method="POST" action="{{ url_for('vote_by_link', link_suffix=link_suffix) }}">
+                {% else %}
+                    <form method="POST" action="{{ url_for('vote', group_name=group_name) }}">
+                {% endif %}
+
                     {% for category_name, category_data in categories.items() %}
                         <div class="mt-4">
                             <h3>{{ category_name }}</h3>

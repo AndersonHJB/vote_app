@@ -27,20 +27,29 @@
                         <label for="options" class="form-label">Options (comma-separated)</label>
                         <input type="text" class="form-control" id="options" name="options">
                     </div>
+                    <!-- 新增链接后缀设置，如不设置则会自动生成UUID -->
+                    <div class="mb-3">
+                        <label for="link_suffix" class="form-label">Link Suffix (optional)</label>
+                        <input type="text" class="form-control" id="link_suffix" name="link_suffix" placeholder="If empty, will use a UUID">
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Add</button>
                 </form>
                 <h2 class="mt-5">Existing Vote Groups</h2>
-                {% for group_name, categories in poll_data.items() %}
+                {% for group_name, data in poll_data.items() %}
                     <div class="mt-4">
                         <h3>{{ group_name }}</h3>
+                        <p>Link Suffix: {{ data['_meta']['link_suffix'] if '_meta' in data else 'N/A' }}</p>
                         <ul class="list-group">
-                            {% for category_name, category_data in categories.items() %}
+                            {% for category_name, category_data in data.items() %}
+                                {% if category_name != '_meta' %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     {{ category_name }}
                                     <form method="POST" action="{{ url_for('delete_category', group_name=group_name, category_name=category_name) }}" class="d-inline">
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
                                 </li>
+                                {% endif %}
                             {% endfor %}
                         </ul>
                         <form method="POST" action="{{ url_for('delete_group', group_name=group_name) }}" class="mt-3">

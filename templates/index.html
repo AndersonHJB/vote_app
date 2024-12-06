@@ -14,13 +14,20 @@
                 <h1>Vote Groups</h1>
             </div>
             <div class="card-body">
-                <ul class="list-group">
-                    {% for group in groups %}
-                        <li class="list-group-item">
-                            <a href="{{ url_for('group', group_name=group) }}" class="text-decoration-none text-dark">{{ group }}</a>
-                        </li>
+                <div class="list-group">
+                    {% for group_name, data in poll_data.items() %}
+                        {% set link_suffix = data['_meta']['link_suffix'] if data.get('_meta') else None %}
+                        {% if link_suffix %}
+                            <a href="{{ url_for('group_by_link', link_suffix=link_suffix) }}" class="list-group-item text-decoration-none text-dark">
+                                {{ group_name }}
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('group', group_name=group_name) }}" class="list-group-item text-decoration-none text-dark">
+                                {{ group_name }}
+                            </a>
+                        {% endif %}
                     {% endfor %}
-                </ul>
+                </div>
                 <a href="{{ url_for('admin') }}" class="btn btn-primary mt-4 d-block">Admin Panel</a>
             </div>
         </div>

@@ -14,10 +14,15 @@
                 <h1>{{ category_name }}</h1>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ url_for('vote', category_name=category_name) }}">
+                <!-- 同样根据是否有link_suffix来决定form的action -->
+                {% if link_suffix %}
+                    <form method="POST" action="{{ url_for('vote_by_link', link_suffix=link_suffix) }}">
+                {% else %}
+                    <form method="POST" action="{{ url_for('vote', group_name=group_name) }}">
+                {% endif %}
                     {% for option in options %}
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="option" value="{{ option }}" id="{{ option }}">
+                            <input class="form-check-input" type="radio" name="{{ category_name }}" value="{{ option }}" id="{{ option }}">
                             <label class="form-check-label" for="{{ option }}">
                                 {{ option }}
                             </label>
