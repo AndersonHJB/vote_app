@@ -1,22 +1,42 @@
 {
-    "\u540d\u5b57": {
-        "options": [
-            "\u6211\u8981\u8bd5\u4e00\u8bd5"
-        ],
-        "results": {
-            "\u6211\u8981\u8bd5\u4e00\u8bd5": 1
+    "Vote Group 1": {
+        "Favorite Star": {
+            "options": [
+                "Star A",
+                "Star B",
+                "Star C"
+            ],
+            "results": {
+                "Star A": 10,
+                "Star B": 8,
+                "Star C": 3
+            }
+        },
+        "Favorite Sport": {
+            "options": [
+                "Basketball",
+                "Badminton",
+                "Table Tennis"
+            ],
+            "results": {
+                "Basketball": 9,
+                "Badminton": 9,
+                "Table Tennis": 3
+            }
         }
     },
-    "\u4f60\u597d": {
-        "options": [
-            "A",
-            "BBB",
-            "sks"
-        ],
-        "results": {
-            "A": 2,
-            "BBB": 0,
-            "sks": 0
+    "Vote Group 2": {
+        "Favorite Movie Genre": {
+            "options": [
+                "Action",
+                "Comedy",
+                "Drama"
+            ],
+            "results": {
+                "Action": 5,
+                "Comedy": 6,
+                "Drama": 2
+            }
         }
     }
 }

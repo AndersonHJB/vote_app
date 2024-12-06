@@ -9,28 +9,40 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Admin Panel</h1>
-        <form method="POST" class="mt-3">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="group_name" class="form-label">Vote Group Name</label>
+                <input type="text" class="form-control" id="group_name" name="group_name" required>
+            </div>
             <div class="mb-3">
                 <label for="category_name" class="form-label">Category Name</label>
-                <input type="text" class="form-control" id="category_name" name="category_name" required>
+                <input type="text" class="form-control" id="category_name" name="category_name">
             </div>
             <div class="mb-3">
                 <label for="options" class="form-label">Options (comma-separated)</label>
-                <input type="text" class="form-control" id="options" name="options" required>
+                <input type="text" class="form-control" id="options" name="options">
             </div>
-            <button type="submit" class="btn btn-primary">Add Category</button>
+            <button type="submit" class="btn btn-primary">Add</button>
         </form>
-        <h2 class="mt-5">Existing Categories</h2>
-        <ul class="list-group">
-            {% for category_name, category_data in poll_data.items() %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ category_name }}
-                    <form method="POST" action="{{ url_for('delete_category', category_name=category_name) }}" class="d-inline">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
+        <h2 class="mt-5">Existing Vote Groups</h2>
+        {% for group_name, categories in poll_data.items() %}
+            <div class="mt-4">
+                <h3>{{ group_name }}</h3>
+                <ul class="list-group">
+                    {% for category_name, category_data in categories.items() %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ category_name }}
+                            <form method="POST" action="{{ url_for('delete_category', group_name=group_name, category_name=category_name) }}" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete Category</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <form method="POST" action="{{ url_for('delete_group', group_name=group_name) }}" class="mt-3">
+                    <button type="submit" class="btn btn-danger">Delete Group</button>
+                </form>
+            </div>
+        {% endfor %}
     </div>
 </body>
 </html>
