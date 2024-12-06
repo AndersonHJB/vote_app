@@ -9,7 +9,7 @@
             "results": {
                 "Star A": 10,
                 "Star B": 8,
-                "Star C": 3
+                "Star C": 6
             }
         },
         "Favorite Sport": {
@@ -21,7 +21,7 @@
             "results": {
                 "Basketball": 9,
                 "Badminton": 9,
-                "Table Tennis": 3
+                "Table Tennis": 4
             }
         }
     },
@@ -34,7 +34,7 @@
             ],
             "results": {
                 "Action": 5,
-                "Comedy": 6,
+                "Comedy": 8,
                 "Drama": 2
             }
         }

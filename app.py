@@ -61,7 +61,8 @@ def results(group_name):
     """显示某个投票组的投票结果"""
     if group_name not in poll_data:
         return "Group not found", 404
-    return render_template("results.html", group_name=group_name, categories=poll_data[group_name])
+    categories = poll_data[group_name]
+    return render_template("results.html", group_name=group_name, categories=categories)
 
 
 @app.route("/admin", methods=["GET", "POST"])
