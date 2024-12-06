@@ -1,0 +1,403 @@
+style.css:
+/* style.css */
+body {
+    background-color: #f4f6f8;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+    text-transform: capitalize;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #3498db;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-bottom: none;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.btn {
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-transform: capitalize;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #7f8c8d;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #95a5a6;
+}
+
+.list-group-item {
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 10px 15px;
+}
+
+.list-group-item:hover {
+    background-color: #ecf0f1;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+admin.html:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h1>Admin Panel</h1>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="group_name" class="form-label">Vote Group Name</label>
+                        <input type="text" class="form-control" id="group_name" name="group_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category_name" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="category_name" name="category_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="options" class="form-label">Options (comma-separated)</label>
+                        <input type="text" class="form-control" id="options" name="options">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+                <h2 class="mt-5">Existing Vote Groups</h2>
+                {% for group_name, categories in poll_data.items() %}
+                    <div class="mt-4">
+                        <h3>{{ group_name }}</h3>
+                        <ul class="list-group">
+                            {% for category_name, category_data in categories.items() %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ category_name }}
+                                    <form method="POST" action="{{ url_for('delete_category', group_name=group_name, category_name=category_name) }}" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <form method="POST" action="{{ url_for('delete_group', group_name=group_name) }}" class="mt-3">
+                            <button type="submit" class="btn btn-danger">Delete Group</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+index.html:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Groups</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h1>Vote Groups</h1>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for group in groups %}
+                        <li class="list-group-item">
+                            <a href="{{ url_for('group', group_name=group) }}" class="text-decoration-none text-dark">{{ group }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ url_for('admin') }}" class="btn btn-primary mt-4 d-block">Admin Panel</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+category.html:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category_name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h1>{{ category_name }}</h1>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('vote', category_name=category_name) }}">
+                    {% for option in options %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="option" value="{{ option }}" id="{{ option }}">
+                            <label class="form-check-label" for="{{ option }}">
+                                {{ option }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary mt-3">Submit Vote</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+group.html:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ group_name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h1>{{ group_name }}</h1>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('vote', group_name=group_name) }}">
+                    {% for category_name, category_data in categories.items() %}
+                        <div class="mt-4">
+                            <h3>{{ category_name }}</h3>
+                            {% for option in category_data["options"] %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="{{ category_name }}" value="{{ option }}" id="{{ category_name }}-{{ option }}">
+                                    <label class="form-check-label" for="{{ category_name }}-{{ option }}">
+                                        {{ option }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary mt-4">Submit Vote</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+results.html:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - {{ group_name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h1>Results for {{ group_name }}</h1>
+            </div>
+            <div class="card-body">
+                {% for category_name, category_data in categories.items() %}
+                    <div class="mt-4">
+                        <h3>{{ category_name }}</h3>
+                        <ul class="list-group">
+                            {% for option, votes in category_data["results"].items() %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ option }}
+                                    <span class="badge bg-primary rounded-pill">{{ votes }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+                <a href="{{ url_for('group', group_name=group_name) }}" class="btn btn-secondary mt-4 d-block">Back to Group</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+app.py:
+import json
+from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)
+
+# JSON 文件路径
+DATA_FILE = "poll_data.json"
+
+
+def load_data():
+    """从 JSON 文件加载投票数据"""
+    try:
+        with open(DATA_FILE, "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return {}
+
+
+def save_data(data):
+    """将投票数据保存到 JSON 文件"""
+    with open(DATA_FILE, "w") as file:
+        json.dump(data, file, indent=4)
+
+
+@app.route("/")
+def index():
+    """首页：显示所有投票组"""
+    poll_data = load_data()
+    groups = list(poll_data.keys())
+    return render_template("index.html", groups=groups)
+
+
+@app.route("/group/<group_name>")
+def group(group_name):
+    """显示某个投票组的所有类别"""
+    poll_data = load_data()
+    if group_name not in poll_data:
+        return "Group not found", 404
+    categories = poll_data[group_name]
+    return render_template("group.html", group_name=group_name, categories=categories)
+
+
+@app.route("/vote/<group_name>", methods=["POST"])
+def vote(group_name):
+    """处理某个投票组的投票"""
+    poll_data = load_data()
+    if group_name not in poll_data:
+        return "Group not found", 404
+
+    for category_name, category_data in poll_data[group_name].items():
+        selected_option = request.form.get(category_name)
+        if selected_option in category_data["results"]:
+            poll_data[group_name][category_name]["results"][selected_option] += 1
+
+    save_data(poll_data)  # 保存更新后的数据到 JSON
+    return redirect(url_for("results", group_name=group_name))
+
+
+@app.route("/results/<group_name>")
+def results(group_name):
+    """显示某个投票组的投票结果"""
+    poll_data = load_data()
+    if group_name not in poll_data:
+        return "Group not found", 404
+    categories = poll_data[group_name]
+    return render_template("results.html", group_name=group_name, categories=categories)
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    """后台管理页面，用于添加、删除投票组和类别"""
+    poll_data = load_data()
+    if request.method == "POST":
+        group_name = request.form.get("group_name")
+        category_name = request.form.get("category_name")
+        options = request.form.get("options").split(",")
+
+        if group_name:
+            # 如果投票组不存在，则创建
+            if group_name not in poll_data:
+                poll_data[group_name] = {}
+
+            # 如果提供了类别，则添加类别
+            if category_name and options:
+                poll_data[group_name][category_name] = {
+                    "options": options,
+                    "results": {option: 0 for option in options},
+                }
+
+        save_data(poll_data)  # 保存更新
+        return redirect(url_for("admin"))
+
+    return render_template("admin.html", poll_data=poll_data)
+
+
+@app.route("/delete_group/<group_name>", methods=["POST"])
+def delete_group(group_name):
+    """删除投票组"""
+    poll_data = load_data()
+    if group_name in poll_data:
+        del poll_data[group_name]
+        save_data(poll_data)  # 保存更新
+    return redirect(url_for("admin"))
+
+
+@app.route("/delete_category/<group_name>/<category_name>", methods=["POST"])
+def delete_category(group_name, category_name):
+    """删除投票组中的某个类别"""
+    poll_data = load_data()
+    if group_name in poll_data and category_name in poll_data[group_name]:
+        del poll_data[group_name][category_name]
+        save_data(poll_data)  # 保存更新
+    return redirect(url_for("admin"))
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
