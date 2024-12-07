@@ -1,92 +1,116 @@
 style.css:
 /* style.css */
 body {
-    background: linear-gradient(135deg, #f4f6f8 0%, #e9ecf2 100%);
-    font-family: 'Roboto', sans-serif;
-    color: #333;
+    background: #f5f5f7;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #1d1d1f;
     margin: 0;
     padding: 0;
+    line-height: 1.6;
 }
 
 h1, h2, h3 {
-    color: #2c3e50;
-    text-transform: capitalize;
+    color: #1d1d1f;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: -0.02em;
+    margin: 0 0 15px 0;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 20px;
 }
 
 .container {
-    max-width: 900px;
+    max-width: 960px;
     margin: 0 auto;
     padding: 20px;
 }
 
 .card {
-    border: none;
-    border-radius: 8px;
+    border: 1px solid #d2d2d7;
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    margin-bottom: 40px;
-    transition: box-shadow 0.3s ease;
+    margin-bottom: 30px;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .card:hover {
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }
 
 .card-header {
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: #fff;
+    background: #f5f5f7;
+    color: #1d1d1f;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    padding: 15px;
-    border-bottom: none;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .card-body {
     padding: 20px;
+    color: #1d1d1f;
 }
 
 .btn {
-    border-radius: 20px;
+    display: inline-block;
+    border-radius: 8px;
     padding: 10px 20px;
-    text-transform: capitalize;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+    border: none;
 }
 
 .btn-primary {
-    background-color: #3498db;
-    border: none;
+    background-color: #007aff;
+    color: #fff;
 }
 
 .btn-primary:hover {
-    background-color: #2980b9;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    background-color: #005bb5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .btn-secondary {
-    background-color: #7f8c8d;
-    border: none;
+    background-color: #f5f5f7;
+    color: #007aff;
+    border: 1px solid #d2d2d7;
 }
 
 .btn-secondary:hover {
-    background-color: #95a5a6;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    background-color: #e0e0e0;
+    color: #005bb5;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .list-group-item {
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 12px 20px;
     background: #fff;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .list-group-item:hover {
-    background-color: #ecf0f1;
+    background-color: #f5f5f7;
+    transform: scale(1.02);
     cursor: pointer;
 }
 
@@ -94,6 +118,10 @@ h1, h2, h3 {
 @media (max-width: 768px) {
     h1 {
         font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
     }
 
     .btn {
@@ -106,25 +134,26 @@ h1, h2, h3 {
 .category-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 20px;
+    justify-content: center;
 }
 
 .category-links a {
     display: inline-block;
-    border: 1px solid #3498db;
-    border-radius: 20px;
-    padding: 8px 15px;
-    color: #3498db;
-    text-decoration: none;
+    padding: 10px 18px;
+    border: 1px solid #007aff;
+    border-radius: 12px;
+    color: #007aff;
     font-size: 14px;
+    text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .category-links a:hover {
-    background-color: #3498db;
+    background-color: #007aff;
     color: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 admin.html:
@@ -362,9 +391,9 @@ results.html:
 
                 <!-- 根据是否有link_suffix决定返回链接 -->
                 {% if link_suffix %}
-                    <a href="{{ url_for('group_by_link', link_suffix=link_suffix) }}" class="btn btn-secondary mt-4 d-block">Back to Group</a>
+                    <a href="{{ url_for('group_by_link', link_suffix=link_suffix) }}" class="btn btn-secondary mt-4 d-block">回到投票</a>
                 {% else %}
-                    <a href="{{ url_for('group', group_name=group_name) }}" class="btn btn-secondary mt-4 d-block">Back to Group</a>
+                    <a href="{{ url_for('group', group_name=group_name) }}" class="btn btn-secondary mt-4 d-block">回到投票</a>
                 {% endif %}
 
             </div>

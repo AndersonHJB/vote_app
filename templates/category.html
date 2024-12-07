@@ -14,12 +14,13 @@
                 <h1>{{ category_name }}</h1>
             </div>
             <div class="card-body">
-                <!-- 同样根据是否有link_suffix来决定form的action -->
                 {% if link_suffix %}
                     <form method="POST" action="{{ url_for('vote_by_link', link_suffix=link_suffix) }}">
                 {% else %}
                     <form method="POST" action="{{ url_for('vote', group_name=group_name) }}">
                 {% endif %}
+                    <!-- 新增昵称输入框 -->
+                    <input type="text" class="form-control mb-3" name="nickname" placeholder="请输入您的昵称(如不填写将自动生成)">
                     {% for option in options %}
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="{{ category_name }}" value="{{ option }}" id="{{ option }}">

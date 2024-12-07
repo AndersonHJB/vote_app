@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>昵称投票详情 - {{ group_name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h1>{{ group_name }} - 昵称投票详情</h1>
+            </div>
+            <div class="card-body">
+                {% if user_votes %}
+                    {% for nickname, votes_dict in user_votes.items() %}
+                        <div class="mt-4">
+                            <h3>{{ nickname }}</h3>
+                            <ul class="list-group">
+                                {% for cat_name, chosen_option in votes_dict.items() %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        {{ cat_name }}: {{ chosen_option }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>尚无用户投票记录。</p>
+                {% endif %}
+                <a href="{{ url_for('group', group_name=group_name) }}" class="btn btn-secondary mt-4 d-block">返回投票页</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

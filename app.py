@@ -1,6 +1,9 @@
 import json
 import uuid
 from flask import Flask, render_template, request, redirect, url_for
+from datetime import datetime
+import random
+import string
 
 app = Flask(__name__)
 
@@ -20,7 +23,7 @@ def load_data():
 def save_data(data):
     """将投票数据保存到 JSON 文件"""
     with open(DATA_FILE, "w") as file:
-        json.dump(data, file, indent=4)
+        json.dump(data, file, indent=4, ensure_ascii=False)
 
 
 def find_group_by_link_suffix(poll_data, link_suffix):
@@ -29,6 +32,12 @@ def find_group_by_link_suffix(poll_data, link_suffix):
         if "_meta" in g_data and g_data["_meta"].get("link_suffix") == link_suffix:
             return g_name
     return None
+
+def generate_random_nickname():
+    # 生成随机用户名并加上日期后缀
+    rand_str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+    date_suffix = datetime.now().strftime('%Y%m%d')
+    return f"User_{rand_str}_{date_suffix}"
 
 
 @app.route("/")
@@ -45,7 +54,8 @@ def group(group_name):
     if group_name not in poll_data:
         return "Group not found", 404
     categories = {k: v for k, v in poll_data[group_name].items() if k != "_meta"}
-    return render_template("group.html", group_name=group_name, categories=categories)
+    link_suffix = poll_data[group_name]["_meta"].get("link_suffix") if "_meta" in poll_data[group_name] else None
+    return render_template("group.html", group_name=group_name, categories=categories, link_suffix=link_suffix)
 
 
 @app.route("/results/<group_name>")
@@ -55,7 +65,8 @@ def results(group_name):
     if group_name not in poll_data:
         return "Group not found", 404
     categories = {k: v for k, v in poll_data[group_name].items() if k != "_meta"}
-    return render_template("results.html", group_name=group_name, categories=categories)
+    link_suffix = poll_data[group_name]["_meta"].get("link_suffix") if "_meta" in poll_data[group_name] else None
+    return render_template("results.html", group_name=group_name, categories=categories, link_suffix=link_suffix)
 
 
 @app.route("/vote/<group_name>", methods=["POST"])
@@ -65,12 +76,24 @@ def vote(group_name):
     if group_name not in poll_data:
         return "Group not found", 404
 
+    nickname = request.form.get("nickname", "").strip()
+    if not nickname:
+        nickname = generate_random_nickname()
+
+    # 确保user_votes字段存在
+    if "user_votes" not in poll_data[group_name]["_meta"]:
+        poll_data[group_name]["_meta"]["user_votes"] = {}
+
+    user_votes = poll_data[group_name]["_meta"]["user_votes"]
+    user_votes[nickname] = user_votes.get(nickname, {})
+
     for category_name, category_data in poll_data[group_name].items():
         if category_name == "_meta":
             continue
         selected_option = request.form.get(category_name)
-        if selected_option in category_data["results"]:
-            poll_data[group_name][category_name]["results"][selected_option] += 1
+        if selected_option and selected_option in category_data["results"]:
+            category_data["results"][selected_option] += 1
+            user_votes[nickname][category_name] = selected_option
 
     save_data(poll_data)  # 保存更新后的数据到 JSON
     return redirect(url_for("results", group_name=group_name))
@@ -104,12 +127,23 @@ def vote_by_link(link_suffix):
     if not group_name:
         return "Group not found", 404
 
+    nickname = request.form.get("nickname", "").strip()
+    if not nickname:
+        nickname = generate_random_nickname()
+
+    if "user_votes" not in poll_data[group_name]["_meta"]:
+        poll_data[group_name]["_meta"]["user_votes"] = {}
+
+    user_votes = poll_data[group_name]["_meta"]["user_votes"]
+    user_votes[nickname] = user_votes.get(nickname, {})
+
     for category_name, category_data in poll_data[group_name].items():
         if category_name == "_meta":
             continue
         selected_option = request.form.get(category_name)
-        if selected_option in category_data["results"]:
-            poll_data[group_name][category_name]["results"][selected_option] += 1
+        if selected_option and selected_option in category_data["results"]:
+            category_data["results"][selected_option] += 1
+            user_votes[nickname][category_name] = selected_option
 
     save_data(poll_data)
     return redirect(url_for("results_by_link", link_suffix=link_suffix))
@@ -126,7 +160,7 @@ def admin():
         link_suffix = request.form.get("link_suffix")
 
         options_list = []
-        if options.strip():
+        if options and options.strip():
             options_list = [opt.strip() for opt in options.split(",") if opt.strip()]
 
         if group_name:
@@ -137,7 +171,8 @@ def admin():
                     link_suffix = str(uuid.uuid4())
                 poll_data[group_name] = {
                     "_meta": {
-                        "link_suffix": link_suffix
+                        "link_suffix": link_suffix,
+                        "user_votes": {}
                     }
                 }
 
@@ -181,6 +216,16 @@ def single_category(group_name, category_name):
     options = poll_data[group_name][category_name]["options"]
     link_suffix = poll_data[group_name]["_meta"]["link_suffix"] if "_meta" in poll_data[group_name] else None
     return render_template("category.html", category_name=category_name, options=options, group_name=group_name, link_suffix=link_suffix)
+
+
+@app.route("/voters/<group_name>")
+def voters(group_name):
+    """查看每个昵称所投选项的页面"""
+    poll_data = load_data()
+    if group_name not in poll_data:
+        return "Group not found", 404
+    user_votes = poll_data[group_name]["_meta"].get("user_votes", {})
+    return render_template("voters.html", group_name=group_name, user_votes=user_votes)
 
 
 if __name__ == "__main__":
